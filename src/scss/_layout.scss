@@ -1,0 +1,19 @@
+html{
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  margin: 0;
+}
+
+.container{
+  padding: 0 1em;
+  &-toc{
+    page-break-after: always;
+  }
+}
+
+section{
+  // page-break-before: always;
+}
