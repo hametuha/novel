@@ -9,15 +9,11 @@ const pngquant = require('imagemin-pngquant');
 const browserSync = require('browser-sync').create();
 const _ = require('lodash');
 
-/**
- * Convert figure tag.
- *
- * @param {String} html
- * @return {String}
- */
-function replaceFigureTag(html){
-  return html.replace(/<p><img([^>]*)alt="(.*?)"([^>]*)><\/p>/mg, '<figure><img$1$3><figcaption>$2</figcaption></figure>');
-}
+const md = (new MarkdonwIt())
+  .use(require('markdown-it-deflist'))
+  .use(require('markdown-it-ruby'));
+
+const src = __dirname + '/src';
 
 /**
  * Get target directory
@@ -25,7 +21,47 @@ function replaceFigureTag(html){
  * @return {String}
  */
 function getDir(){
-  return (process.env.TARGET || './').replace(/\/$/, '');
+  return (process.env.TARGET || process.cwd() ).replace(/\/$/, '');
+}
+
+/**
+ * Convert content
+ *
+ * @param {String} content
+ * @returns {String}
+ */
+function convert( content ) {
+  // Ruby
+  content = content.replace(/{([^}]*)}/g, function(match, regexp){
+    // Save mathematic function.
+    return match.replace('|', '\|');
+  });
+  content = content.replace( /\|([^<]*)<([^>]*)>/g, "{$1|$2}" );
+  // Convert markdown to HTML.
+  content = md.render(content);
+  content = replaceTags(content);
+  return content;
+}
+
+/**
+ * Convert figure tag.
+ *
+ * @param {String} html
+ * @return {String}
+ */
+function replaceTags(html){
+  const replaces = {
+      '<figure><img$1$3><figcaption>$2</figcaption></figure>': /<p><img([^>]*)alt="(.*?)"([^>]*)><\/p>/mg,
+      '<p style="text-align:right;">$1</p>': /<p>-&gt;(.*?)<\/p>/g
+  };
+  for ( const replaced in replaces ) {
+      if ( ! replaces.hasOwnProperty( replaced ) ) {
+          continue;
+      }
+
+      html = html.replace( replaces[ replaced ], replaced );
+  }
+  return html;
 }
 
 /**
@@ -56,14 +92,14 @@ function getProp(name){
 gulp.task('check', function(done){
   console.log({
     "Target Dir": getDir(),
-    "setting": grabWorkSetting()
+    "setting": grabWorkSetting(),
   });
   done();
 });
 
 // Sass tasks
 gulp.task('sass', function () {
-  return gulp.src(['./src/scss/print.scss'])
+  return gulp.src([ src + '/scss/print.scss'])
     .pipe($.plumber({
       errorHandler: $.notify.onError('<%= error.message %>')
     }))
@@ -71,21 +107,19 @@ gulp.task('sass', function () {
       errLogToConsole: true,
       outputStyle    : 'compressed',
       includePaths   : [
-        './src/sass'
+        src + '/scss'
       ]
     }))
-    .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
-    .pipe(gulp.dest('./html/css'));
+    .pipe($.autoprefixer({
+
+    }))
+    .pipe(gulp.dest( getDir() + '/html/css'));
 });
 
 // Pug task
 gulp.task('pug', function (done) {
-  let compiler = pug.compileFile('src/templates/index.pug');
-  let md = new MarkdonwIt();
+  let compiler = pug.compileFile( src + '/templates/index.pug');
   const dir = getDir();
-  md = md
-    .use(require('markdown-it-deflist'))
-    .use(require('markdown-it-ruby'));
   fs.readdir( dir + '/manuscripts', function (err, files) {
     if(err){
       throw err;
@@ -99,23 +133,16 @@ gulp.task('pug', function (done) {
       const id = file.replace(/\.(md|txt)/, '');
       // Create HTML
       let content = fs.readFileSync( dir + '/manuscripts/' + file).toString();
-      // Ruby
-      content = content.replace(/{([^}]*)}/g, function(match, regexp){
-        // Save mathematic function.
-        return match.replace('|', '\|');
-      });
-      content = content.replace( /\|([^<]*)<([^>]*)>/g, "{$1|$2}" );
-      let title = file.match(/^\d+_(.*)\.(md|txt)$/m);
-      content = md.render(content);
-      content = replaceFigureTag(content);
+      content = convert( content );
       contents.push({
         id  : id,
         html: content,
       });
-
+      const title = file.match(/^\d+_(.*)\.(md|txt)$/m);
       tocs.push({
         title: title[1],
         target: getProp(`target[${index}]`),
+        id: id,
       });
     });
     // Save html
@@ -124,9 +151,12 @@ gulp.task('pug', function (done) {
       contents: contents,
       authorName: getProp('authorName'),
       workTitle: getProp('workTitle'),
+      direction: getProp( 'direction') || 'tb',
+      charLimit: getProp( 'char' ) || 0,
+      lineLimit: getProp( 'line' ) || 0,
+      year: getProp('year') || (new Date()).getFullYear(),
     });
-    console.log(tocs);
-    fs.writeFile('html/index.html', html, function (err) {
+    fs.writeFile( getDir() + '/html/index.html', html, function (err) {
       if (err) {
         throw err;
       }
@@ -143,15 +173,15 @@ gulp.task('imagemin', function () {
       svgoPlugins: [{removeViewBox: false}],
       use        : [pngquant()]
     }))
-    .pipe(gulp.dest('./html/images'));
+    .pipe(gulp.dest( getDir() + '/html/images'));
 });
 
 // watch print
 gulp.task('sync:print', function () {
   return browserSync.init({
-    files : ["html/**/*"],
+    files : [ getDir() + "/html/**/*"],
     server: {
-      baseDir: "./html",
+      baseDir: getDir() + "/html",
       index  : "index.html"
     },
     reloadDelay: 2000
@@ -163,21 +193,21 @@ gulp.task('reload', function () {
 });
 
 gulp.task('js', function(){
-  return gulp.src('src/js/**/*')
-    .pipe(gulp.dest('html/js'));
+  return gulp.src( src + '/js/**/*')
+    .pipe(gulp.dest( getDir() + '/html/js'));
 });
 
 // watch
 gulp.task('watch', function (done) {
   // Make SASS
-  gulp.watch(['src/scss/**/*.scss'], gulp.task('sass'));
+  gulp.watch([ src + '/scss/**/*.scss'], gulp.task('sass'));
   // Copy JS
-  gulp.watch(['src/js/**/*.js'], gulp.task('js'));
+  gulp.watch([ src + '/js/**/*.js'], gulp.task('js'));
   // HTML
   gulp.watch(
     [
       getDir() + '/manuscripts/**/*.(md|txt)',
-      'src/templates/**/*.pug',
+      src + '/templates/**/*.pug',
       getDir() + '/setting.json',
     ],
     gulp.task('pug')
@@ -185,7 +215,7 @@ gulp.task('watch', function (done) {
   // Minify Image
   gulp.watch(getDir() + 'manuscripts/images/**/*', gulp.task('imagemin'));
   // Sync browser sync.
-  gulp.watch([ 'html/**/*' ], gulp.task('reload'));
+  gulp.watch([ getDir() + '/html/**/*' ], gulp.task('reload'));
   done();
 });
 

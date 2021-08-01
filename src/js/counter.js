@@ -31,7 +31,6 @@
     // Fix p
     $('.story-content p').each(function(index, p){
       var text = $(p).text();
-      console.log(text);
       if(/^[「『]/.test(text)){
         $(p).addClass('no-indent');
       }
@@ -49,16 +48,16 @@
       });
       length = length - rubyLength;
       total += length;
-      $('tbody .toc-row').each(function(j, row){
+      $('.toc-row').each(function(j, row){
         if(j === index){
-          var $result = $(row).find('td:nth-child(2)');
-          var $target = $(row).find('td:nth-child(3)');
-          $result.text(separate(length) + '文字');
+          var $result = $(row).find('.current');
+          var $target = $(row).find('.target');
+          $result.text(separate(length));
           var targetLength = $.trim($target.text());
           if(targetLength.match(/\d+/)){
             targetLength = parseInt(targetLength, 10);
             // check target length
-            $target.addClass(getTargetClass(length, targetLength));
+            $(row).find('.statistic').addClass(getTargetClass(length, targetLength));
             totalTarget += targetLength;
             $target.text(separate(targetLength) + '文字');
           }else{
@@ -67,11 +66,40 @@
         }
       });
     });
-    $('.toc-list tfoot .toc-row td:nth-child(2)').text(separate(total) + '文字');
-    var $totaltargetCell = $('.toc-list tfoot .toc-row td:nth-child(3)');
-    if(totalTarget){
-      $totaltargetCell.text(separate(totalTarget) + '文字');
-    }
+    $('.total-current').text(separate(total));
+    $('.total-count').text(separate(totalTarget) + '文字');
   });
+
+  // If max char set, limit.
+  var charLimit = $('.container-main').attr('data-max-char');
+  if(/^\d+$/.test(charLimit)){
+    document.documentElement.style.setProperty('--max-line-width', ( parseInt( charLimit, 10 ) ) + "em" );
+  }
+
+  // If line limit exists, notify.
+  var lineLimit = $('.container-main').attr('data-max-line');
+  if(/^\d+$/.test(charLimit) && 0 < lineLimit) {
+    // Set line limit.
+    document.documentElement.style.setProperty('--max-line-length', parseInt( lineLimit, 10 ) );
+    $('.story-content .container').addClass('line-limited');
+    // 2x13pt
+    var currentLines = 0;
+    $('.story-content p').each( function( index, p ) {
+      var lineHeight = parseFloat( getComputedStyle( p ).getPropertyValue( 'line-height' ) );
+      currentLines += Math.round( p.offsetHeight / lineHeight );
+    } );
+    var lineStatusClass = currentLines <= lineLimit ? 'ok' : 'ng';
+    $('.colophon-total').append('<strong class="' + lineStatusClass +  '">（' + currentLines + '/' + lineLimit + '行）</strong>')
+  }
+
+  $('#toggle').click( function(e) {
+    e.preventDefault();
+    $(this).toggleClass('toggled');
+    window.location.hash = $(this).hasClass( 'toggled' ) ? 'toc-open' : '';
+  } );
+
+  if ( window.location.hash.match( /toc-open/ ) ) {
+    $( '#toggle' ).addClass( 'toggled' );
+  }
 
 })(jQuery);

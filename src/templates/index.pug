@@ -5,36 +5,40 @@ html
     title=workTitle
     link(rel='stylesheet' href='./css/print.css')
   body
-    .container.container-titlepage
-      h1.titlepage-title
-        each line in workTitle.split('  ')
-          span.titlepage-string=line
-      p.titlepage-author=authorName
-    .container.container-toc
+    button#toggle.toggle(title='目次')
+      span
+      span
+      span
+
+    .container-toc
       h1.toc-title 目次
       nav
-        table.toc-list
-          thead
-            tr.toc-row
-              th タイトル
-              th 文字数
-              th 目標
-          tfoot
-            tr.toc-row
-              th.right='合計'
-              td 0
-              td ---
-          tbody
-            each link, index in toc
-              tr.toc-row
-                th=link.title
-                td=0
-                td=link.target
+        ol.toc-list
+          each link, index in toc
+            li.toc-row
+              a.toc-link(href=`#${link.id}`)=link.title
+              span.statistic
+                span.current=0
+                span.separator /
+                span.target #{link.target || 0}
+    main
+      .container.container-titlepage
+        .titlepage-container
+          h1.titlepage-title
+            each line in workTitle.split('  ')
+              span.titlepage-string=line
+          p.titlepage-author=authorName
+      .container-main(data-max-char=charLimit data-max-line=lineLimit)
+        each content in contents
+          section.story-content(id=content.id)
+            .container!=content.html
 
+    footer.colophon
+      p.colophon-text &copy; #{year} #{authorName}
+      p.colophon-total
+        span.total-current
+        | /
+        span.total-count
 
-    each content in contents
-      section.story-content(id=content.id)
-        .container!=content.html
-
-    script(src='https://code.jquery.com/jquery-3.3.1.min.js', integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=', crossorigin='anonymous')
-    script(src='js/counter.js')
+  script(defer=true src='https://code.jquery.com/jquery-3.3.1.min.js', integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=', crossorigin='anonymous')
+  script(defer=true src='js/counter.js')

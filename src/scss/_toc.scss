@@ -2,7 +2,17 @@
   font-family: $sans;
 }
 
+.container-titlepage {
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+}
+
 .titlepage {
+
+  &-container {
+
+  }
 
   &-title{
 
@@ -32,52 +42,112 @@
   }
 }
 
+.toggle {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 100;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid #444;
+  color: #444;
+  background-color: white;
+  -webkit-appearance: none;
+  border-radius: 5px;
+  cursor: pointer;
+  &.toggled {
+    color: white;
+    background-color: #444;
+  }
+  span {
+    position: absolute;
+    width: 32px;
+    height: 2px;
+    background-color: currentColor;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-1px);
+
+    &:first-child {
+      transform: translateY(-10px);
+    }
+    &:last-child {
+      transform: translateY(9px);
+    }
+  }
+}
+
 $toc-title-border: 1mm double #eee !default;
+
+.container-toc {
+  display: none;
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  right: 0;
+  bottom: 41px;
+  width: 300px;
+  box-sizing: border-box;
+  border-left: 1px solid black;
+  background-color: white;
+  overflow: scroll;
+
+  .toggled + & {
+    display: block;
+
+    + main {
+      margin-right: 300px;
+    }
+  }
+}
+
 .toc-title {
   text-align: center;
-  margin-bottom: 1em;
+  margin: 1em 15px 1em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid #ddd;
+  font-size: 20px;
 }
 
 .toc-list {
-  table-layout: auto;
-  width: 100%;
-  border-collapse: collapse;
-  th, td {
-    padding: 1em;
-    border-top: 0.25mm solid #eee;
+  padding: 0 15px 40px 40px;
+
+  li {
+    margin: 10px 0;
   }
-  thead{
-    th, td{
-      border-bottom: $toc-title-border;
-    }
-  }
-  th {
+
+  a {
+    display: block;
     text-align: left;
-    font-weight: normal;
-    &.right{
-      text-align: right;
+    &:link,
+    &:visited {
+      color: black;
+      text-decoration: underline;
+    }
+    &:hover,
+    &:active {
+      color: #06c;
+      text-decoration: none;
     }
   }
-  td {
-    width: 5em;
+
+  .statistic {
+    font-size: 12px;
+    font-weight: bold;
+    display: block;
     text-align: right;
-    &.success{
-      color: #72b383;
-    }
-    &.warning{
-      color: rgba(255, 215, 142, 0.99);
-    }
-    &.danger{
-      color: #eb6e66;
-    }
-
+    padding: 10px 0;
   }
-  tfoot{
-    th, td{
-      border-top: $toc-title-border;
-      border-bottom: $toc-title-border;
 
-    }
+  .success{
+    color: $success;
+  }
+  .warning{
+    color: $warning;
+  }
+  .danger{
+    color: $danger;
   }
 }
 

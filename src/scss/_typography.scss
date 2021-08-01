@@ -4,9 +4,13 @@ $serif: Georgia, YuMincho, serif;
 $body-size: 13pt !default;
 $body-color: #222;
 
-body{
-	color: $body-color;
-	font-family: $serif;
-	font-size: $body-size;
+
+:root {
+	--body-font: #{$serif};
 }
 
+body{
+	color: $body-color;
+	font-family: var(--body-font);
+	font-size: $body-size;
+}
