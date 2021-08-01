@@ -1,13 +1,16 @@
 {
-  "name": "novel",
+  "name": "@hametuha/novel",
   "version": "1.0.0",
-  "description": "",
+  "description": "Novel writing tool by Hametuha.",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "gulp server:print",
+    "start": "gulp server",
     "build": "gulp build",
     "gulp": "gulp"
+  },
+  "bin": {
+    "novel": "cli.js"
   },
   "repository": {
     "type": "git",
@@ -22,7 +25,10 @@
     "url": "https://github.com/hametuha/novel/issues"
   },
   "homepage": "https://github.com/hametuha/novel#readme",
-  "devDependencies": {
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
     "browser-sync": "^2.26.3",
     "gulp": "^4.0.0",
     "gulp-autoprefixer": "^6.0.0",

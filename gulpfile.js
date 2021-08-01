@@ -89,16 +89,16 @@ function getProp(name){
 /**
  * Get setting.
  */
-gulp.task('check', function(done){
+const check = function(done){
   console.log({
     "Target Dir": getDir(),
     "setting": grabWorkSetting(),
   });
   done();
-});
+};
 
 // Sass tasks
-gulp.task('sass', function () {
+const sass = function () {
   return gulp.src([ src + '/scss/print.scss'])
     .pipe($.plumber({
       errorHandler: $.notify.onError('<%= error.message %>')
@@ -114,10 +114,10 @@ gulp.task('sass', function () {
 
     }))
     .pipe(gulp.dest( getDir() + '/html/css'));
-});
+};
 
 // Pug task
-gulp.task('pug', function (done) {
+const html = (done) => {
   let compiler = pug.compileFile( src + '/templates/index.pug');
   const dir = getDir();
   fs.readdir( dir + '/manuscripts', function (err, files) {
@@ -163,10 +163,10 @@ gulp.task('pug', function (done) {
       done();
     });
   });
-});
+};
 
 // Imagemin
-gulp.task('imagemin', function () {
+const imagemin = function () {
   return gulp.src(getDir() + '/manuscripts/images/**/*')
     .pipe($.imagemin({
       progressive: true,
@@ -174,10 +174,10 @@ gulp.task('imagemin', function () {
       use        : [pngquant()]
     }))
     .pipe(gulp.dest( getDir() + '/html/images'));
-});
+};
 
 // watch print
-gulp.task('sync:print', function () {
+const bs = function () {
   return browserSync.init({
     files : [ getDir() + "/html/**/*"],
     server: {
@@ -186,23 +186,23 @@ gulp.task('sync:print', function () {
     },
     reloadDelay: 2000
   });
-});
+};
 
-gulp.task('reload', function () {
+const reload = function () {
   return browserSync.reload();
-});
+};
 
-gulp.task('js', function(){
+const js = function(){
   return gulp.src( src + '/js/**/*')
     .pipe(gulp.dest( getDir() + '/html/js'));
-});
+};
 
 // watch
-gulp.task('watch', function (done) {
+const watch = function (done) {
   // Make SASS
-  gulp.watch([ src + '/scss/**/*.scss'], gulp.task('sass'));
+  gulp.watch([ src + '/scss/**/*.scss'], sass);
   // Copy JS
-  gulp.watch([ src + '/js/**/*.js'], gulp.task('js'));
+  gulp.watch([ src + '/js/**/*.js'], js);
   // HTML
   gulp.watch(
     [
@@ -210,16 +210,26 @@ gulp.task('watch', function (done) {
       src + '/templates/**/*.pug',
       getDir() + '/setting.json',
     ],
-    gulp.task('pug')
+    html
   );
   // Minify Image
-  gulp.watch(getDir() + 'manuscripts/images/**/*', gulp.task('imagemin'));
+  gulp.watch(getDir() + 'manuscripts/images/**/*', imagemin );
   // Sync browser sync.
-  gulp.watch([ getDir() + '/html/**/*' ], gulp.task('reload'));
+  gulp.watch([ getDir() + '/html/**/*' ], reload );
   done();
-});
+};
 
-gulp.task('build', gulp.parallel('pug', 'sass', 'imagemin', 'js'));
+const build = gulp.parallel( html, sass, imagemin, js );
 
-gulp.task('server:print', gulp.series('build', 'watch', 'sync:print'));
+const server = gulp.series( build, watch, bs );
 
+exports.check = check;
+exports.sass = sass;
+exports.js = js;
+exports.html = html;
+exports.imagemin = imagemin;
+exports.bs = bs;
+exports.reload = reload;
+exports.watch = watch;
+exports.build = build;
+exports.server = server;
