@@ -156,6 +156,12 @@ const html = (done) => {
       lineLimit: getProp( 'line' ) || 0,
       year: getProp('year') || (new Date()).getFullYear(),
     });
+    // If directory not exists, create one.
+    const htmlDir = getDir() + '/html';
+    if ( ! fs.existsSync( htmlDir ) ) {
+      fs.mkdirSync( htmlDir );
+    }
+    // Write files.
     fs.writeFile( getDir() + '/html/index.html', html, function (err) {
       if (err) {
         throw err;
