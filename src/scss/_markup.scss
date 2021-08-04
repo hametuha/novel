@@ -14,168 +14,181 @@ $figcaption-margin: 5mm !default;
 
 
 .story-content {
-  h1, h2, h3, h4, h5 {
-    margin: 2em 0 1em;
-    font-family: $sans;
-    font-weight: normal;
-  }
-  h1 {
-    font-size: 2em;
-    // 著者名
-    & + p{
-      text-align: right;
-      font-size: 1.2em;
-      font-weight: bold;
-      font-family: $sans;
-      margin-bottom: 2em;
-    }
-  }
-  h2 {
-    color: $h2-color;
-    font-size: 1.8em;
-    border-bottom: $h2-border-style;
-    padding-bottom: 1em;
-  }
-  h3 {
-    color: $h3-color;
-    font-size: 1.5em;
-    border-left: $h3-border-style;
-    padding-left: $h3-border-padding;
-  }
-  h4{
-    font-weight: bold;
-    font-size: $body-size;
-  }
-  p{
-    line-height: 2;
-    margin: 0;
-    text-align: justify;
-    text-justify: inter-ideograph;
-    text-indent: 1em;
-    &.no-indent{
-      text-indent: 0;
-    }
-  }
+	h1, h2, h3, h4, h5 {
+		margin: 2em 0 1em;
+		font-family: $sans;
+		font-weight: normal;
+	}
 
-  strong{
-    font-weight: normal;
-    font-family: $monospace;
-  }
-  em{
-    font-style: normal;
-    text-emphasis: sesame filled;
-  }
+	h1 {
+		font-size: 2em;
+		// 著者名
+		& + p {
+			text-align: right;
+			font-size: 1.2em;
+			font-weight: bold;
+			font-family: $sans;
+			margin-bottom: 2em;
+		}
+	}
 
-  ul, dl, ol{
-    font-family: $sans;
-    margin: 1em 0;
-  }
-  ul,ol{
-    padding-left: 1.5em;
-  }
-  li{
-    margin: 0.25em 0;
-  }
-  ul li{
-    list-style: square;
-  }
-  dt{
-    font-weight: bold;
-    margin: 0.5em 0 0.25em;
-  }
-  dl{
-    page-break-before: always;
-    padding: 1em;
-    border: 0.5mm solid #000;
-  }
-  dd{
-    margin: 0.25em 0 0.5em;
-  }
+	h2 {
+		color: $h2-color;
+		font-size: 1.8em;
+		border-bottom: $h2-border-style;
+		padding-bottom: 1em;
+	}
 
-  blockquote{
-    position: relative;
-    margin: 1em 0 1em 1em;
-    color: #000;
-  }
+	h3 {
+		color: $h3-color;
+		font-size: 1.5em;
+		border-left: $h3-border-style;
+		padding-left: $h3-border-padding;
+	}
 
-  a{
-    font-family: $sans;
-  }
+	h4 {
+		font-weight: bold;
+		font-size: $body-size;
+	}
 
+	p {
+		line-height: 2;
+		margin: 0;
+		text-align: justify;
+		text-justify: inter-ideograph;
+		text-indent: 1em;
 
+		&.no-indent {
+			text-indent: 0;
+		}
+	}
 
-  table {
-    margin: 1em 0;
-    width: 100%;
-    table-layout: auto;
-    border-collapse: collapse;
-    font-family: $sans;
-    th, td {
-      border: 1px solid #ddd;
-      padding: 1em;
-    }
-    thead th {
-      border-bottom: 3px double #ddd;
-    }
-    tbody tr:nth-child(odd) {
-      th, td {
-        background-color: #f9f9f9;
-      }
-    }
-  }
+	strong {
+		font-weight: normal;
+		font-family: $monospace;
+	}
 
-}
+	em {
+		font-style: normal;
+		text-emphasis: sesame filled;
+	}
 
-pre, code {
-  font-family: $monospace;
-}
+	ul, dl, ol {
+		font-family: $sans;
+		margin: 1em 0;
+	}
 
-pre {
-  margin: 1em 0;
-  padding: 1em;
-  line-height: 1.4;
-  word-break: break-all;
-  white-space: pre-wrap;
-}
+	ul, ol {
+		padding-left: 1.5em;
+	}
+
+	li {
+		margin: 0.25em 0;
+	}
+
+	ul li {
+		list-style: square;
+	}
+
+	dt {
+		font-weight: bold;
+		margin: 0.5em 0 0.25em;
+	}
+
+	dl {
+		page-break-before: always;
+		padding: 1em;
+		border: 0.5mm solid #000;
+	}
+
+	dd {
+		margin: 0.25em 0 0.5em;
+	}
+
+	blockquote {
+		position: relative;
+		margin: 1em 0 1em 1em;
+		color: #000;
+	}
+
+	a {
+		font-family: $sans;
+	}
 
 
-code {
-  padding: 0.2em 0.25em;
-}
+	table {
+		margin: 1em 0;
+		width: 100%;
+		table-layout: auto;
+		border-collapse: collapse;
+		font-family: $sans;
+
+		th, td {
+			border: 1px solid #ddd;
+			padding: 1em;
+		}
+
+		thead th {
+			border-bottom: 3px double #ddd;
+		}
+
+		tbody tr:nth-child(odd) {
+			th, td {
+				background-color: #f9f9f9;
+			}
+		}
+	}
+
+	pre, code {
+		font-family: $monospace;
+	}
+
+	pre {
+		margin: 1em 0;
+		padding: 1em;
+		line-height: 1.4;
+		word-break: break-all;
+		white-space: pre-wrap;
+	}
 
 
+	code {
+		padding: 0.2em 0.25em;
+	}
 
-img{
-  max-width: 100%;
-  width: auto;
-  height: auto;
-}
 
-figure {
-  text-align: center;
-  padding: 1em;
-  margin: 1em 0;
-  background: #f9f9f9;
-  img{
-    max-width: 90%;
-    page-break-inside: auto;
-  }
-}
+	img {
+		max-width: 100%;
+		width: auto;
+		height: auto;
+	}
 
-figcaption {
-  color: #888;
-  font-size: 0.85em;
-  margin-top: $figcaption-margin;
-  font-family: $sans;
-}
+	figure {
+		text-align: center;
+		padding: 1em;
+		margin: 1em 0;
+		background: #f9f9f9;
 
-hr{
-  display: block;
-  border: none;
-  text-align: center;
-  &:after{
-    content: "＊";
-    color: #888;
-    margin: 1em 0;
-  }
+		img {
+			max-width: 90%;
+			page-break-inside: auto;
+		}
+	}
+
+	figcaption {
+		color: #888;
+		font-size: 0.85em;
+		margin-top: $figcaption-margin;
+		font-family: $sans;
+	}
+
+	hr {
+		display: block;
+		border: none;
+		width: 30mm;
+		height: 0.5mm;
+		margin: 3em auto;
+		background-color: black;
+	}
+
 }

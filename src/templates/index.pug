@@ -1,9 +1,33 @@
+-
+  var charStyle = '';
+  var charContainerClass = [];
+  if ( charLimit ) {
+    charStyle = ':root { --max-line-width: ' + charLimit + 'em; } ';
+  }
+  charContainerClass = charContainerClass.join( ' ' );
+
 doctype html
 html
   head
     meta(charset='utf-8')
     title=workTitle
-    link(rel='stylesheet' href='./css/print.css')
+    meta(name="author" content=authorName)
+    link(rel='stylesheet' href='./css/screen.css' media='screen')
+    link(rel='stylesheet' href='./css/print.css' media='print')
+    style(media="print").
+      @page {
+        @top-center {
+          content: "#{workTitle}";
+          font-size: 9pt;
+          font-weight: bold;
+        }
+      }
+      @page:first {
+        @top-center {
+          content: "";
+        }
+      }
+    style=charStyle
   body
     button#toggle.toggle(title='目次')
       span
@@ -22,13 +46,14 @@ html
                 span.separator /
                 span.target #{link.target || 0}
     main
-      .container.container-titlepage
-        .titlepage-container
-          h1.titlepage-title
+      .container.container-title-page
+        .title-page-container
+          h1.title-page-title
             each line in workTitle.split('  ')
-              span.titlepage-string=line
-          p.titlepage-author=authorName
-      .container-main(data-max-char=charLimit data-max-line=lineLimit)
+              span.title-page-string=line
+          p.title-page-author=authorName
+
+      .container-main(data-max-line=lineLimit)
         each content in contents
           section.story-content(id=content.id)
             .container!=content.html

@@ -99,7 +99,10 @@ const check = function(done){
 
 // Sass tasks
 const sass = function () {
-  return gulp.src([ src + '/scss/print.scss'])
+  return gulp.src( [
+      src + '/scss/*.scss',
+      ! + src + '/scss/_*.scss',
+  ])
     .pipe($.plumber({
       errorHandler: $.notify.onError('<%= error.message %>')
     }))
@@ -229,6 +232,8 @@ const build = gulp.parallel( html, sass, imagemin, js );
 
 const server = gulp.series( build, watch, bs );
 
+exports.getDir = getDir;
+exports.getProp = getProp;
 exports.check = check;
 exports.sass = sass;
 exports.js = js;

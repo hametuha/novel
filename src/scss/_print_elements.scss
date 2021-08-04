@@ -3,21 +3,35 @@ img {
   filter: grayscale(100%);
 }
 
-// Container padding for preview
-.container {
-  @media only screen {
-    padding: 20mm;
-  }
+.container-toc,
+.toggle {
+  display: none;
 }
 
 @page {
-  size: A4;
-  margin: 0;
-  padding: 4cm 2cm;
+  size: portrait;
+  padding: 0;
+  margin: 2cm 2cm 2.5cm;
+
+  @top-center {
+    content: "P and Q";
+  }
+
+  @bottom-center {
+    content: "- " counter(page) " -";
+    text-align: center;
+    font-size: 9pt;
+  }
+}
+
+.colophon {
+  display: none;
 }
 
 // Body elements.
 .story-content {
+  font-size: 10.5pt;
+
   a {
     &:after {
       margin-left: 1mm;
