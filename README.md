@@ -1,8 +1,23 @@
 # novel
+
 A CLI novel project management tool set.
 
 ```
-TARGET=/path/to/dir npm start
+npm install @hametuha/novel
+```
+
+```
+# Generate setting file
+npx novel init
+
+# Generate HTML
+npx novel build
+
+# Gemerate ePub
+npx novel epub
+
+# See HTML.
+npx novel
 ```
 
 ## Acknowlegement
