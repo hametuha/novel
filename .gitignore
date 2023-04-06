@@ -1,8 +1,11 @@
-node_modules
-assets
-html
-epub
-manuscripts
+/node_modules/
+/assets/
+/html/
+/dist/
+/epub/
+/vendor/
+/manuscripts/
+epub.json
 setting.json
 package-lock.json
 snapshots

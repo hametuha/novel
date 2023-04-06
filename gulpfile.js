@@ -152,8 +152,8 @@ const html = (done) => {
     const html = compiler({
       toc     : tocs,
       contents: contents,
-      authorName: getProp('authorName'),
-      workTitle: getProp('workTitle'),
+      authorName: getProp('author'),
+      workTitle: getProp('title'),
       direction: getProp( 'direction') || 'tb',
       charLimit: getProp( 'char' ) || 0,
       lineLimit: getProp( 'line' ) || 0,
@@ -173,6 +173,40 @@ const html = (done) => {
     });
   });
 };
+
+/**
+ * Render HTML contents from template
+ *
+ * @param {object} variables Variables for template.
+ * @param {string} template Template file path.
+ * @returns {string} HTML string.
+ */
+const htmlTemplate = function ( variables, template ) {
+    let compiler = pug.compileFile(template);
+    return compiler( variables );
+}
+
+/**
+ * Compile markdown to HTML
+ *
+ * @param {object} variables Variables for template.
+ * @param {string} template Template file path.
+ * @param {string} markdown Markdown file path.
+ * @param {boolean} skip_convert Skip convert markdown to HTML.
+ * @param {function} callback Callback function.
+ * @returns {string} HTML string.
+ */
+const compileFromMarkDown = function( variables, template, markdown, skip_convert = false, callback=null ) {
+    let content = fs.readFileSync( markdown).toString();
+    if ( callback ) {
+        content = callback( content );
+    }
+    if ( ! skip_convert ) {
+        content = convert( content );
+    }
+    variables.content = content;
+    return htmlTemplate( variables, template );
+}
 
 // Imagemin
 const imagemin = function () {
@@ -244,3 +278,5 @@ exports.reload = reload;
 exports.watch = watch;
 exports.build = build;
 exports.server = server;
+exports.htmlTemplate = htmlTemplate;
+exports.compileFromMarkDown = compileFromMarkDown;

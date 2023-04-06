@@ -9,6 +9,9 @@
     "build": "gulp build",
     "gulp": "gulp"
   },
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "bin": {
     "novel": "cli.js"
   },
@@ -49,5 +52,6 @@
     "merge-stream": "^2.0.0",
     "mkdirp": "^1.0.4",
     "pug": "^3.0.2"
-  }
+  },
+  "devDependencies": {}
 }

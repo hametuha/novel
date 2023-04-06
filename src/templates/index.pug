@@ -10,14 +10,14 @@ doctype html
 html
   head
     meta(charset='utf-8')
-    title=workTitle
-    meta(name="author" content=authorName)
+    title=title
+    meta(name="author" content=author)
     link(rel='stylesheet' href='./css/screen.css' media='screen')
     link(rel='stylesheet' href='./css/print.css' media='print')
     style(media="print").
       @page {
         @top-center {
-          content: "#{workTitle}";
+          content: "#{title}";
           font-size: 9pt;
           font-weight: bold;
         }

@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title=title
+    meta(name="author" content=author)
+    each style in styles
+      link(rel='stylesheet' href=style)
+  body.content.content--article
+    if show_header
+      header.header.header--article
+        h1.header__title=title
+        if author
+          p.header__author=author
+        if lead
+          p.header__lead=lead
+
+    main.content!=content
+
+    if copy && year
+      footer.footer.footer--article
+        p.footer__text
+          | &copy; #{year} #{copy}

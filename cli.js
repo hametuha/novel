@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const fs = require( 'fs' );
 const { spawn } = require( 'child_process' );
-const { server, build, getDir, getProp } = require( './gulpfile' );
+const { server, build, getDir, getProp, compileFromMarkDown, htmlTemplate } = require( './gulpfile' );
 
 
 const subcommand = process.argv[ 2 ];
@@ -74,6 +74,45 @@ switch ( subcommand ) {
 		}
 		runCommand( 'vivliostyle', [ 'preview', '-s', 'A4', '-d', src ] );
 		break;
+    case 'epub':
+        const epubSetting = getDir() + '/epub.json';
+        if ( !fs.existsSync( epubSetting ) ) {
+            throw new Error( 'epub.jsonが存在しません: ' + epubSetting );
+        }
+        const epub = JSON.parse( fs.readFileSync( epubSetting ) );
+        if ( ! fs.existsSync( epub.dest ) ) {
+            fs.mkdirSync( epub.dest, { recursive: true } );
+        }
+        epub.pages.forEach( ( page ) => {
+            const dest = epub.dest + '/' + page.name;
+            console.log( `${page.name}を生成します……` );
+            // Merge stylesheet.
+            const styles = epub.styles
+            if ( styles.length ) {
+                if ( page.data.styles ) {
+                    styles.map( ( style ) => {
+                        page.data.styles.push( style );
+                    } );
+                } else {
+                    page.data.styles = styles;
+                }
+            }
+            // Seek template.
+            if ( ! fs.existsSync( page.template ) ) {
+                page.template = __dirname + '/src/templates/' + page.template;
+            }
+            let output;
+            if ( page.source ) {
+                // Should read from file.
+                output = compileFromMarkDown( page.data, page.template, page.source, !!page.raw );
+            } else {
+                // Render pug.
+                output = htmlTemplate( page.data, page.template );
+            }
+            fs.writeFileSync( dest, output );
+        } );
+        console.log( 'ePub用のHTMLを生成しました.' );
+        break;
 	default:
 		server();
 		break;
