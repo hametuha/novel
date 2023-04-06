@@ -10,7 +10,7 @@ html(xmlns:epub="http://www.idpf.org/2007/ops")
     title=title
     each style in styles
       link(rel='stylesheet' href=style)
-  body.content.content--colophon
+  body.content.content--colophon(data-direction=direction)
     header.header.header--colophon
       h1.header__title.header__title--colohpon=title
     article.content.content--colophon(epub:type=type)!=content

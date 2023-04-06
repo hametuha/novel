@@ -6,7 +6,7 @@ html
     meta(name="author" content=author)
     each style in styles
       link(rel='stylesheet' href=style)
-  body.content.content--article
+  body.content.content--article(data-direction=direction)
     if show_header
       header.header.header--article
         h1.header__title=title

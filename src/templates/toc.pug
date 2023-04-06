@@ -5,7 +5,7 @@ html(xmlns:epub="http://www.idpf.org/2007/ops")
     title=title
     each style in styles
       link(rel='stylesheet' href=style)
-  body.content.content--toc
+  body.content.content--toc(data-direction=direction)
     header.header.header--toc
         h1.header__title=title
 

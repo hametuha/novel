@@ -5,7 +5,7 @@ html(xmlns:epub="http://www.idpf.org/2007/ops")
     title=doc_title
     each style in styles
       link(rel='stylesheet' href=style)
-  body.content.content--titlepage
+  body.content.content--titlepage(data-direction=direction)
     section.titlepage(epub:type="titlepage")
       h1.titlepage__title
         span=title

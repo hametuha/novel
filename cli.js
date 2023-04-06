@@ -88,6 +88,8 @@ switch ( subcommand ) {
             console.log( `${page.name}を生成します……` );
             // Merge stylesheet.
             const styles = epub.styles
+            page.data.direction = page.data.direction || epub.direction;
+            page.data.lang = page.data.lang || epub.lang;
             if ( styles.length ) {
                 if ( page.data.styles ) {
                     styles.map( ( style ) => {
