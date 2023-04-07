@@ -4,13 +4,15 @@
     }
 
 doctype html
-html(xmlns:epub="http://www.idpf.org/2007/ops" lang=lang)
-  head(lang=lang)
+html(xmlns:epub="http://www.idpf.org/2007/ops" lang=lang class=direction)
+  head
     meta(charset='utf-8')
     title=title
     each style in styles
       link(rel='stylesheet' href=style)
-  body.content.content--colophon(data-direction=direction)
-    header.header.header--colophon
-      h1.header__title.header__title--colohpon=title
+  body.content.content--script.content--colophon
+    if show_header
+      header.header.header--colophon
+        h1.header__title.header__title--colohpon=title
+
     article.content.content--colophon(epub:type=type)!=content

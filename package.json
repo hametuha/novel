@@ -1,6 +1,6 @@
 {
   "name": "@hametuha/novel",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Novel writing tool by Hametuha.",
   "main": "gulpfile.js",
   "scripts": {
