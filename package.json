@@ -1,57 +1,58 @@
 {
-  "name": "@hametuha/novel",
-  "version": "1.2.5",
-  "description": "Novel writing tool by Hametuha.",
-  "main": "gulpfile.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "gulp server",
-    "build": "gulp build",
-    "gulp": "gulp"
-  },
-  "engines": {
-    "node": ">=14.0.0"
-  },
-  "bin": {
-    "novel": "cli.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hametuha/novel.git"
-  },
-  "keywords": [
-    "node"
-  ],
-  "author": "Hametuha INC.",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/hametuha/novel/issues"
-  },
-  "homepage": "https://github.com/hametuha/novel#readme",
-  "publishConfig": {
-    "access": "public"
-  },
-  "dependencies": {
-    "@vivliostyle/cli": "^3.5.2",
-    "browser-sync": "^2.27.5",
-    "gulp": "^4.0.0",
-    "gulp-autoprefixer": "^8.0.0",
-    "gulp-imagemin": "^7.1.0",
-    "gulp-load-plugins": "^2.0.7",
-    "gulp-notify": "^4.0.0",
-    "gulp-plumber": "^1.2.1",
-    "gulp-pug": "^5.0.0",
-    "gulp-rename": "^2.0.0",
-    "gulp-sass": "^4.0.2",
-    "imagemin-pngquant": "^9.0.2",
-    "jstransformer-markdown-it": "^2.0.0",
-    "lodash": "^4.17.11",
-    "markdown-it": "^12.1.0",
-    "markdown-it-deflist": "^2.0.3",
-    "markdown-it-ruby": "^0.1.1",
-    "merge-stream": "^2.0.0",
-    "mkdirp": "^1.0.4",
-    "pug": "^3.0.2"
-  },
-  "devDependencies": {}
+    "name": "@hametuha/novel",
+    "version": "1.2.5",
+    "description": "Novel writing tool by Hametuha.",
+    "main": "gulpfile.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "gulp server",
+        "build": "gulp build",
+        "gulp": "gulp",
+        "epub": "node cli.js epub tmp=epub"
+    },
+    "engines": {
+        "node": ">=14.0.0"
+    },
+    "bin": {
+        "novel": "cli.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/hametuha/novel.git"
+    },
+    "keywords": [
+        "node"
+    ],
+    "author": "Hametuha INC.",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/hametuha/novel/issues"
+    },
+    "homepage": "https://github.com/hametuha/novel#readme",
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "@vivliostyle/cli": "^3.5.2",
+        "browser-sync": "^2.27.5",
+        "gulp": "^4.0.0",
+        "gulp-autoprefixer": "^8.0.0",
+        "gulp-imagemin": "^7.1.0",
+        "gulp-load-plugins": "^2.0.7",
+        "gulp-notify": "^4.0.0",
+        "gulp-plumber": "^1.2.1",
+        "gulp-pug": "^5.0.0",
+        "gulp-rename": "^2.0.0",
+        "gulp-sass": "^4.0.2",
+        "imagemin-pngquant": "^9.0.2",
+        "jstransformer-markdown-it": "^2.0.0",
+        "lodash": "^4.17.11",
+        "markdown-it": "^12.1.0",
+        "markdown-it-deflist": "^2.0.3",
+        "markdown-it-ruby": "^0.1.1",
+        "merge-stream": "^2.0.0",
+        "mkdirp": "^1.0.4",
+        "pug": "^3.0.2"
+    },
+    "devDependencies": {}
 }
