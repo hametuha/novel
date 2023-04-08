@@ -25,19 +25,16 @@ html(xmlns:epub="http://www.idpf.org/2007/ops" lang=lang class=direction)
     nav#landmarks(epub:type="landmarks" hidden="hidden" class="hidden")
       ol(epub:type="list")
           each item in toc
-            li
-              if item.type
+            if item.type
+              li
                 a(href=item.href epub:type=item.type)=item.label
                   if item.children
-                    ol
-                      each child in item.children
-                        li
-                          a(href=child.href)=child.label
-              else
-                a(href=item.href)=item.label
-                  if item.children
-                    ol
-                      each child in item.children
-                        li
-                          a(href=child.href)=child.label
-
+                    -
+                      var typeChildren = item.children.filter( function( child ) {
+                          return child.type;
+                      } );
+                    if typeChildren.length > 0
+                      ol
+                        each child in item.children
+                          li
+                            a(href=child.href epub:type=child.type)=child.label
