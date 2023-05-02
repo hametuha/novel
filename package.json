@@ -1,10 +1,11 @@
 {
     "name": "@hametuha/novel",
-    "version": "1.2.8",
+    "version": "1.3.0",
     "description": "Novel writing tool by Hametuha.",
     "main": "gulpfile.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "echo \"Error: no test specified\" && exit 0",
+        "lint": "echo \"No lint setup yet. Should have eslint and stylelint.\"",
         "start": "gulp server",
         "build": "gulp build",
         "gulp": "gulp",

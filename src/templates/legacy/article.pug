@@ -1,0 +1,24 @@
+doctype html
+html(xmlns:epub="http://www.idpf.org/2007/ops" lang=lang class=direction)
+  head
+    meta(charset='utf-8')
+    title=title
+    meta(name="author" content=author)
+    meta(name="viewport" content="width=device-width")
+    each style in styles
+      link(rel='stylesheet' type="text/css" href=style)
+  body.content.content--script.content--article
+    if show_header
+      .header.header--article
+        h1.header__title=title
+        if show_author
+          p.header__author=author
+        if lead
+          p.header__lead=lead
+
+    .content!=content
+
+    if copy && year
+      .footer.footer--article
+        p.footer__text
+          | &copy; #{year} #{copy}

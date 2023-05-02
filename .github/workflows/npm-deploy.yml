@@ -1,0 +1,56 @@
+name: CI/CD for NPM publish
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    name: Run lint and Unit test.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Install NPM Packages
+        run: npm install
+
+      - name: Check JS syntax
+        run: npm run lint
+
+      - name: Run unit tests
+        run: npm test
+
+  release:
+    name: Publish npm package
+    needs: [ lambda ]
+    if: contains(github.ref, 'tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+          registry-url: https://registry.npmjs.org
+          always-auth: true
+          scope: '@hametuha'
+
+      - name: Build Package
+        run: bash bin/build.sh ${{ github.ref }}
+
+      - name: Publish package
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN_HAMETUHA }}

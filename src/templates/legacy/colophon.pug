@@ -1,0 +1,19 @@
+-
+    if ( typeof type === 'undefined' ) {
+        type = '';
+    }
+
+doctype html
+html(xmlns:epub="http://www.idpf.org/2007/ops" lang=lang class=direction)
+  head
+    meta(charset='utf-8')
+    meta(name="viewport" content="width=device-width")
+    title=title
+    each style in styles
+      link(rel='stylesheet' type="text/css" href=style)
+  body.content.content--script.content--colophon(epub:type=type)
+    if show_header
+      .header.header--colophon
+        h1.header__title.header__title--colohpon=title
+
+    .content.content--colophon!=content

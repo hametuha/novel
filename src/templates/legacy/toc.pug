@@ -1,0 +1,40 @@
+doctype html
+html(xmlns:epub="http://www.idpf.org/2007/ops" lang=lang class=direction)
+  head
+    meta(charset='utf-8')
+    meta(name="viewport" content="width=device-width")
+    title=title
+    each style in styles
+      link(rel='stylesheet' type="text/css" href=style)
+  body.content.content--toc
+    .header.header--toc
+        h1.header__title=title
+
+    .content--toc
+      nav#toc(epub:type="toc")
+        ol
+          each item in toc
+            li
+              a(href=item.href)=item.label
+              if item.children
+                ol
+                  each child in item.children
+                    li
+                      a(href=child.href)=child.label
+
+    nav#landmarks(epub:type="landmarks" hidden="hidden" class="hidden")
+      ol(epub:type="list")
+          each item in toc
+            if item.type
+              li
+                a(href=item.href epub:type=item.type)=item.label
+                  if item.children
+                    -
+                      var typeChildren = item.children.filter( function( child ) {
+                          return child.type;
+                      } );
+                    if typeChildren.length > 0
+                      ol
+                        each child in item.children
+                          li
+                            a(href=child.href epub:type=child.type)=child.label

@@ -1,0 +1,17 @@
+doctype html
+html(xmlns:epub="http://www.idpf.org/2007/ops" lang=lang class=direction)
+  head
+    meta(charset='utf-8')
+    meta(name="viewport" content="width=device-width")
+    title=title
+    each style in styles
+      link(rel='stylesheet' type="text/css" href=style)
+  body.content.content--titlepage
+    section.titlepage(epub:type="titlepage")
+      h1.titlepage__title
+        span.titlepage__text=title
+        if subtitle
+          small.titlepage__subtitle=subtitle
+        small.titlepage__author=author
+        if publisher
+          small.titlepage__publisher=publisher
