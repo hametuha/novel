@@ -33,7 +33,7 @@ jobs:
 
   release:
     name: Publish npm package
-    needs: [ lambda ]
+    needs: [ test ]
     if: contains(github.ref, 'tags/')
     runs-on: ubuntu-latest
     steps:
