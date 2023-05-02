@@ -1,0 +1,14 @@
+/.idea/
+/node_modules/
+/assets/
+/html/
+/dist/
+/epub/
+/vendor/
+/manuscripts/
+/bin/
+/tests/
+epub.json
+setting.json
+package-lock.json
+snapshots

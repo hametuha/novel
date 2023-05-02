@@ -6,7 +6,7 @@ set -e
 PREFIX="refs/tags/"
 VERSION=${1#"$PREFIX"}
 
-echo "Building Package v${VERSION}..."
+echo "Preparing npm publish v${VERSION}..."
 
 # Change version string.
 cat package.json | jq ".version = \"${VERSION}\"" > package.json.tmp
