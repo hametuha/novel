@@ -34,7 +34,7 @@
         "access": "public"
     },
     "dependencies": {
-        "@vivliostyle/cli": "^3.5.2",
+        "@vivliostyle/cli": "^8.0.1",
         "browser-sync": "^2.27.5",
         "gulp": "^4.0.0",
         "gulp-autoprefixer": "^8.0.0",
